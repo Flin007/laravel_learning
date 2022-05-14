@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/hello', function (){
    return 'Hello world';
 });
+
+Route::get('/first', 'FirstController@first');
