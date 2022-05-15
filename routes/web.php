@@ -17,8 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function (){
-   return 'Hello world';
-});
-
-Route::get('/first', 'FirstController@first');
+Route::get('/posts', 'PostController@index');
