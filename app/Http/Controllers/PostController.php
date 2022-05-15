@@ -7,93 +7,59 @@ use App\Models\Post;
 class PostController extends Controller
 {
     //Метод получения постов
-    static function get()
+    static function index()
     {
         //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
         $posts = Post::all();
-        return view('posts', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     //Метод для создания новых записей
     static function create()
     {
-        //Пример
-        $postsArr = [
-            [
-                'title' => 'title of new post',
-                'content' => 'some content',
-                'image' => 'imageblabla.jpg',
-                'likes' => '20',
-                'is_published' => '1',
-            ],
-            [
-                'title' => 'title of one more post',
-                'content' => 'some content for second post',
-                'image' => 'imageblabla2.jpg',
-                'likes' => '50',
-                'is_published' => '1',
-            ]
-        ];
-
-        //Пробегаемся по массиву и добавляем в базу
-        foreach ($postsArr as $item) {
-            Post::create($item);
-        }
-
+        return view('post.create');
     }
 
-
-    static function update()
+    //store
+    static function store()
     {
-        $post = Post::find(6);
-        $post->update([
-            'title' => 'updated',
-            'content' => 'updated',
-            'image' => 'updated',
-            'likes' => 1000,
-            'is_published' => 0,
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string'
         ]);
+        Post::create($data);
+        return redirect()->route('post.index');
     }
 
-    static function delete()
+    //show
+    static function show(Post $post)
     {
-        $post = Post::find(6);
+       return view('post.show', compact('post'));
+    }
+
+    //edit
+    static function edit(Post $post){
+        return view('post.edit', compact('post'));
+    }
+
+    //update
+    static function update(Post $post)
+    {
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string'
+        ]);
+        $post->update($data);
+        return redirect()->route('post.show',$post->id);
+    }
+
+    //destroy
+    static function destroy(Post $post)
+    {
         $post->delete();
+        return redirect()->route('post.index');
     }
 
-    static function first_or_create()
-    {
-        //Если не находит пост с заголовком another post, то создает новый, если находит - возвращает первый найденный
-        $post = Post::firstOrCreate([
-            'title' => 'another postt',
-        ],
-            [
-                'title' => 'another post2',
-                'content' => 'another post content',
-                'image' => 'another post.jpg',
-                'likes' => '5000',
-                'is_published' => '1',
-            ]
-        );
-        dump($post->content);
-        dd('finished');
-    }
-
-    static function update_or_create()
-    {
-        //Обновляет найденную запист, если не найдет - создает новую
-        $post = Post::updateOrCreate([
-            'title' => 'another post',
-        ],
-            [
-                'title' => 'another post2',
-                'content' => 'another post content',
-                'image' => 'another post.jpg',
-                'likes' => 777,
-                'is_published' => 1,
-            ]
-        );
-        dump($post->content);
-        dd('finished');
-    }
 }
