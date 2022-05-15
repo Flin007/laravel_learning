@@ -10,10 +10,8 @@ class PostController extends Controller
     static function get()
     {
         //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
-        $posts = Post::where('is_published', 0)->get();
-        foreach ($posts as $post) {
-            echo $post->title . '</br>';
-        }
+        $posts = Post::all();
+        return view('posts', compact('posts'));
     }
 
     //Метод для создания новых записей
