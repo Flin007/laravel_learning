@@ -7,7 +7,7 @@ use App\Models\Post;
 class PostController extends Controller
 {
     //Метод получения постов
-    public function get()
+    static function get()
     {
         //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
         $posts = Post::where('is_published', 0)->get();
@@ -17,7 +17,7 @@ class PostController extends Controller
     }
 
     //Метод для создания новых записей
-    public function create()
+    static function create()
     {
         //Пример
         $postsArr = [
@@ -42,5 +42,17 @@ class PostController extends Controller
             Post::create($item);
         }
 
+    }
+
+
+    static function update(){
+        $post = Post::find(6);
+        $post->update([
+            'title' => 'updated',
+            'content' => 'updated',
+            'image' => 'updated',
+            'likes' => 1000,
+            'is_published' => 0,
+        ]);
     }
 }
