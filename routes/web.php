@@ -13,13 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
-Route::get('/posts', 'PostController@get');
+Route::get('/posts', 'PostController@get')->name('post.index');
 Route::get('/posts/create', 'PostController@create');
 Route::get('/posts/update', 'PostController@update');
 Route::get('/posts/delete', 'PostController@delete');
 Route::get('/posts/firstorcreate', 'PostController@first_or_create');
 Route::get('/posts/updateorcreate', 'PostController@update_or_create');
+
+
+Route::get('/', 'PageIndexController@index')->name('index.index');
+Route::get('/about', 'PageAboutController@index')->name('about.index');
+Route::get('/contacts', 'PageContactsController@index')->name('contact.index');
