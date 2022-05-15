@@ -38,14 +38,15 @@ class PostController extends Controller
         ];
 
         //Пробегаемся по массиву и добавляем в базу
-        foreach ($postsArr as $item){
+        foreach ($postsArr as $item) {
             Post::create($item);
         }
 
     }
 
 
-    static function update(){
+    static function update()
+    {
         $post = Post::find(6);
         $post->update([
             'title' => 'updated',
@@ -54,5 +55,47 @@ class PostController extends Controller
             'likes' => 1000,
             'is_published' => 0,
         ]);
+    }
+
+    static function delete()
+    {
+        $post = Post::find(6);
+        $post->delete();
+    }
+
+    static function first_or_create()
+    {
+        //Если не находит пост с заголовком another post, то создает новый, если находит - возвращает первый найденный
+        $post = Post::firstOrCreate([
+            'title' => 'another postt',
+        ],
+            [
+                'title' => 'another post2',
+                'content' => 'another post content',
+                'image' => 'another post.jpg',
+                'likes' => '5000',
+                'is_published' => '1',
+            ]
+        );
+        dump($post->content);
+        dd('finished');
+    }
+
+    static function update_or_create()
+    {
+        //Обновляет найденную запист, если не найдет - создает новую
+        $post = Post::updateOrCreate([
+            'title' => 'another post',
+        ],
+            [
+                'title' => 'another post2',
+                'content' => 'another post content',
+                'image' => 'another post.jpg',
+                'likes' => 777,
+                'is_published' => 1,
+            ]
+        );
+        dump($post->content);
+        dd('finished');
     }
 }
