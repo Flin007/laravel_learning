@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -11,10 +12,12 @@ class PostController extends Controller
     static function index()
     {
         //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
-        $posts = Post::find(1);
+        $post = Post::find(1);
         $category = Category::find(1);
 
-        dd($posts->category->title);
+        $tag = Tag::find(1);
+
+        dd($tag->posts);
 
         //return view('post.index', compact('posts'));
     }

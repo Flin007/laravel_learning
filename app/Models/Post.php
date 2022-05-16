@@ -40,8 +40,15 @@ class Post extends Model
     //Явно указываем таблицу, с которой работает модель
     protected $table = 'posts';
 
+    //Получаем категорию поста при помощи взаимодействия один ко многим
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    //Получаем все тэги по посту при помощи взаимодействия многие ко многим
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
     }
 }
