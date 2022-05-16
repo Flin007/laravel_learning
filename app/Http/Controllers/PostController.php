@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\PostTag;
 use App\Models\Tag;
 
 class PostController extends Controller
@@ -23,7 +24,10 @@ class PostController extends Controller
         //Находим все категории для передачи во view
         $categories = Category::all();
 
-        return view('post.create', compact('categories'));
+        //Находим все теги для передачи во view
+        $tags = Tag::all();
+
+        return view('post.create', compact('categories', 'tags'));
     }
 
     //store
@@ -33,9 +37,28 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
-            'category_id' => ''
+            'category_id' => '',
+            'tags' => ''
         ]);
-        Post::create($data);
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        //Записываем в переменную что бы получить id создавшегося поста
+        $post = Post::create($data);
+
+        //более профессиональный метод через attach
+        $post->tags()->attach($tags);
+
+
+        //Простой наглядный способ, есть более профессиональный
+        /*foreach ($tags as $tag) {
+            //Используем firstOrCreate что бы не дублировть связи
+            PostTag::firstOrCreate([
+                'tag_id' => $tag,
+                'post_id' => $post->id
+            ]);
+        }*/
+
         return redirect()->route('post.index');
     }
 
