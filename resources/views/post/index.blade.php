@@ -9,7 +9,8 @@
                 <div class="card-body" style="text-decoration: none">
                     <h5 class="card-title">{{ $post->title }}</h5>
                     <p class="card-text">{{ $post->content }}</p>
-                    <span href="#" class="btn btn-primary">{{ $post->likes ? : 0 }}</span>
+                    <p class="card-text">Категория - {{ $post->category->title }}</p>
+                    <span>Лайков - </span><span href="#" class="btn btn-primary">{{ $post->likes ? : 0 }}</span>
                 </div>
             </a>
         @endforeach

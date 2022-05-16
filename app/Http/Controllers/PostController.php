@@ -11,21 +11,19 @@ class PostController extends Controller
     //Метод получения постов
     static function index()
     {
-        //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
-        $post = Post::find(1);
-        $category = Category::find(1);
+        //Находим все посты для передачи во view
+        $posts= Post::all();
 
-        $tag = Tag::find(1);
-
-        dd($tag->posts);
-
-        //return view('post.index', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     //Метод для создания новых записей
     static function create()
     {
-        return view('post.create');
+        //Находим все категории для передачи во view
+        $categories = Category::all();
+
+        return view('post.create', compact('categories'));
     }
 
     //store
@@ -34,7 +32,8 @@ class PostController extends Controller
         $data = request()->validate([
             'title' => 'string',
             'content' => 'string',
-            'image' => 'string'
+            'image' => 'string',
+            'category_id' => ''
         ]);
         Post::create($data);
         return redirect()->route('post.index');
@@ -48,7 +47,10 @@ class PostController extends Controller
 
     //edit
     static function edit(Post $post){
-        return view('post.edit', compact('post'));
+        //Находим все категории для передачи во view
+        $categories = Category::all();
+
+        return view('post.edit', compact('post', 'categories'));
     }
 
     //update
@@ -57,7 +59,8 @@ class PostController extends Controller
         $data = request()->validate([
             'title' => 'string',
             'content' => 'string',
-            'image' => 'string'
+            'image' => 'string',
+            'category_id' => ''
         ]);
         $post->update($data);
         return redirect()->route('post.show',$post->id);
