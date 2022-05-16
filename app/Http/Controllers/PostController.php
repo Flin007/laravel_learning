@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -10,8 +11,12 @@ class PostController extends Controller
     static function index()
     {
         //Находим первый пост с id = 1 в таблице, к которой привязана модель Зщые (posts)
-        $posts = Post::all();
-        return view('post.index', compact('posts'));
+        $posts = Post::find(1);
+        $category = Category::find(1);
+
+        dd($posts->category->title);
+
+        //return view('post.index', compact('posts'));
     }
 
     //Метод для создания новых записей

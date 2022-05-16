@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <h1>This is posts create page</h1>
+    <h1>Изменение поста</h1>
     <form method="post" action="{{ route('post.update', $post->id) }}">
         @csrf
         @method('patch')

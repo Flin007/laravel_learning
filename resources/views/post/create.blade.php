@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <h1>This is posts create page</h1>
+    <h1>Добавление нового поста</h1>
     <form method="post" action="{{ route('post.store') }}">
         @csrf
         <div class="mb-3">
