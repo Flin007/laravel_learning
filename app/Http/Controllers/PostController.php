@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -33,13 +34,24 @@ class PostController extends Controller
     //store
     static function store()
     {
-        $data = request()->validate([
-            'title' => 'string',
-            'content' => 'string',
-            'image' => 'string',
+        $data = request()->all();
+
+        Validator::make($data, [
+            'title' => 'required|min:3|max:10',
+            'content' => 'required|min:10|max:255',
+            'image' => '',
             'category_id' => '',
-            'tags' => ''
-        ]);
+            'tags' => 'required|array',
+        ],
+        [
+            'title.required' => 'Заголовок - обязательно поле',
+            'title.min' => 'Длина заголовока должна быть не меньше 3 символов',
+            'title.max' => 'Длина заголовока должна быть не больше 10 символов',
+            'content.required' => 'Контент - обязательное поле',
+            'content.min' => 'Длина контента должна быть не меньше 10 символов',
+            'content.max' => 'Длина контента должна быть не больше 255 символов',
+        ])->validate();
+
         $tags = $data['tags'];
         unset($data['tags']);
 
