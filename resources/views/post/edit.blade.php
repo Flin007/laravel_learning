@@ -21,7 +21,20 @@
             <label for="category" class="form-label">Выборт категории</label>
             <select id="category" class="form-select mb-3" aria-label="Default select example" name="category_id">
                 @foreach($categories as $category)
-                    <option {{  $post->category->id === $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->title }}</option>
+                    <option
+                        {{  $post->category->id === $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->title }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label">Выборт тегов</label>
+            <select id="tags" class="form-select" multiple aria-label="multiple select example" name="tags[]">
+                @foreach($tags as $tag)
+                    <option
+                        @foreach($post->tags as $postTag)
+                            {{ $postTag->id === $tag->id ? 'selected' : '' }}
+                        @endforeach
+                        value="{{ $tag->id }}">{{ $tag->title }}</option>
                 @endforeach
             </select>
         </div>

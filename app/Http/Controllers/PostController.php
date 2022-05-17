@@ -72,8 +72,9 @@ class PostController extends Controller
     static function edit(Post $post){
         //Находим все категории для передачи во view
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('post.edit', compact('post', 'categories'));
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
     //update
@@ -83,9 +84,20 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
-            'category_id' => ''
+            'category_id' => '',
+            'tags' => ''
         ]);
+
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        //Обновляем данные поста
         $post->update($data);
+
+        //Назначаем тэги для поста
+        //Метод sync удаляем старые связки и добавляет новые
+        $post->tags()->sync($tags);
+
         return redirect()->route('post.show',$post->id);
     }
 
