@@ -3,30 +3,15 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\StoreRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 
 class StoreController extends Controller
 {
-    public function __invoke()
+    public function __invoke(StoreRequest $request)
     {
-        $data = request()->all();
-
-        Validator::make($data, [
-            'title' => 'required|min:3|max:10',
-            'content' => 'required|min:10|max:255',
-            'image' => '',
-            'category_id' => '' ,
-            'tags' => 'required|array',
-        ],
-            [
-                'title.required' => 'Заголовок - обязательно поле',
-                'title.min' => 'Длина заголовока должна быть не меньше 3 символов',
-                'title.max' => 'Длина заголовока должна быть не больше 10 символов',
-                'content.required' => 'Контент - обязательное поле',
-                'content.min' => 'Длина контента должна быть не меньше 10 символов',
-                'content.max' => 'Длина контента должна быть не больше 255 символов',
-            ])->validate();
+        $data = $request->validate( $request, $rules, $request->messages());
 
         $tags = $data['tags'];
         unset($data['tags']);
