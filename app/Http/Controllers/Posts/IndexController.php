@@ -9,7 +9,7 @@ class IndexController extends BaseController
     public function __invoke()
     {
         //Находим все посты для передачи во view
-        $posts= Post::all();
+        $posts= Post::paginate(4);
 
         return view('post.index', compact('posts'));
     }
