@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Posts;
 
-use App\Http\Requests\Post\StoreRequest;
+use App\Http\Requests\Post\FilterRequest;
 
 class StoreController extends BaseController
 {
-    public function __invoke(StoreRequest $request)
+    public function __invoke(FilterRequest $request)
     {
         //Валидирует данные
         $data = $request->validate( $request->rules(), $request->messages());

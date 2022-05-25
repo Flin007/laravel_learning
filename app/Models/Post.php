@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +32,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Post extends Model
 {
+    //Трейт для использования фабрики генерации контента Post::factory(20)->create();
     use HasFactory;
+    //Встраиваем трейт для фильтров
+    use Filterable;
 
     //Разрешаем изменение, добавление данных в базу
     //Можно разрешаеть конкретным атрибутам(стобцам) protected $fillable ["title", "content"];
