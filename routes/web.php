@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Posts'], function(){
 });
 
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function(){
 
     Route::group(['namespace' => 'Post'], function(){
         Route::get('/post', 'IndexController')->name('admin.post.index');
@@ -46,7 +46,7 @@ Route::get('/posts/firstorcreate', 'PostController@first_or_create');
 Route::get('/posts/updateorcreate', 'PostController@update_or_create');
 
 
-Route::get('/', 'HomeController@index')->name('index.index');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/about', 'PageAboutController@index')->name('about.index');
 Route::get('/contacts', 'PageContactsController@index')->name('contact.index');
 
