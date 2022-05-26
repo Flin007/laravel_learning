@@ -23,6 +23,9 @@
             <li class="nav-item"><a class="nav-link {{ Request::routeIs('post.index') ? 'active' : '' }}" href="{{ route('post.index') }}">Посты</a></li>
             <li class="nav-item"><a class="nav-link {{ Request::routeIs('contact.index') ? 'active' : '' }}" href="{{ route('contact.index') }}">Контакты</a></li>
             <li class="nav-item"><a class="nav-link {{ Request::routeIs('about.index') ? 'active' : '' }}" href="{{ route('about.index') }}">О нас</a></li>
+            @can('view', auth()->user())
+                <li class="nav-item"><a class="nav-link {{ Request::routeIs('admin.post.index') ? 'active' : '' }}" href="{{ route('admin.post.index') }}">Админка</a></li>
+            @endcan
         </ul>
     </header>
 </div>

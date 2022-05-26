@@ -10,6 +10,9 @@ class IndexController extends BaseController
 {
     public function __invoke(FilterRequest $request)
     {
+        //Так можно работать с полицией и запрещать те или иные действия
+        //$this->authorize('view', auth()->user());
+
         $data = $request->validated();
 
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
