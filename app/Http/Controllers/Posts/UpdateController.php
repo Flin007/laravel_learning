@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Requests\Post\UpdateRequest;
+use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 
 class UpdateController extends BaseController
@@ -15,9 +16,14 @@ class UpdateController extends BaseController
 
 
         //Передаем в сервис
-        $this->service->update($post, $data);
+        $post = $this->service->update($post, $data);
 
-        return redirect()->route('post.show',$post->id);
+
+        //Раньше редиректили на вью
+        //return redirect()->route('post.show',$post->id);
+
+        //Теперь возвращаем постресурс
+        return new PostResource($post);
     }
 
 }

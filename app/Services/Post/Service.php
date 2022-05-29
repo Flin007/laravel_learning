@@ -17,6 +17,7 @@ class Service
         //более профессиональный метод через attach
         $post->tags()->attach($tags);
 
+        return $post;
 
     }
 
@@ -31,5 +32,7 @@ class Service
         //Назначаем тэги для поста
         //Метод sync удаляем старые связки и добавляет новые
         $post->tags()->sync($tags);
+
+        return $post->fresh();
     }
 }
