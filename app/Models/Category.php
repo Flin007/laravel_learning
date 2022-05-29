@@ -9,6 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
+    //Разрешаем изменение, добавление данных в базу
+    //Можно разрешаеть конкретным атрибутам(стобцам) protected $fillable ["title", "content"];
+    protected $guarded = []; //Можно указать false
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'category_id', 'id');

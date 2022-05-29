@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    //Разрешаем изменение, добавление данных в базу
+    //Можно разрешаеть конкретным атрибутам(стобцам) protected $fillable ["title", "content"];
+    protected $guarded = []; //Можно указать false
+
     //Получаем все посты по тегу при помощи взаимодействия многие ко многим
     public function posts()
     {

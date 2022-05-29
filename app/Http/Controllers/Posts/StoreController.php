@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Posts;
 use App\Http\Requests\Post\FilterRequest;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Resources\Post\PostResource;
+use App\Models\Post;
 
 class StoreController extends BaseController
 {
@@ -16,9 +17,9 @@ class StoreController extends BaseController
         //Передаем в сервис
         $post = $this->service->store($data);
 
-        //Передаем в ресурсы что бы возвращать json на фронт
-        return new PostResource($post);
-
+        //Проверяем наследуется ли пост от модели поста, если нет возвращаем просто пост, в котором лежит ошибка,
+        //пойманная в try catch Service.php
+        return $post instanceof Post ? new PostResource($post) : $post;
 
         //return redirect()->route('post.index');
     }
